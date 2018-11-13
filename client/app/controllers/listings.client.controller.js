@@ -38,10 +38,13 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
               .then(function(response) {
                 $scope.listing = response.data;
 
-                //this block pre-fills the updaate form
+                //this block pre-fills the update form
                 $scope.name = $scope.listing.name;
                 $scope.rating = $scope.listing.rating;
                 $scope.address = $scope.listing.address;
+                $scope.crowdedness = $scope.listing.crowdedness;
+                $scope.data.rooms = $scope.listing.rooms;
+                $scope.data.movies = $scope.listing.movies;
                 //^
 
                 $scope.loading = false;
@@ -67,8 +70,35 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
       var listing = {
         name: $scope.name, 
         rating: $scope.rating, 
-        address: $scope.address
+        address: $scope.address,
+        crowdedness: $scope.crowdedness,
+        rooms: [{
+          number: $scope.data.rooms[0].number,
+          capacity: $scope.data.rooms[0].capacity
+        }],
+        movies: [{
+          title: $scope.data.movies[0].title,
+          description: $scope.data.movies[0].description,
+          showings: $scope.data.movies[0].showings
+        }]
       };
+      
+      //adds all extra rooms to the theater
+      for (var i = 1; i < $scope.data.rooms.length; i++)
+      {
+        var room = {
+          number: $scope.data.rooms[i].number,
+          capacity: $scope.data.rooms[i].capacity
+        };
+        listing.rooms.push(room);
+      }
+
+      //adds all movies to the theater
+      for (var i = 1; i < $scope.data.movies.length; i++)
+      {
+        var movie = $scope.data.movies[i];
+        listing.movies.push(movie);
+      }
 
       /* Save the article using the Listings factory */
       Listings.create(listing)
@@ -233,6 +263,62 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         }); 
       });
     }
+    
+    //initializes room and movie array
+   $scope.data ={
+       rooms:[{ number:0, capacity: 0}],
+       movies:[{ 
+        title:"", 
+        description:"", 
+        showings: [{
+          form: "",
+          room: 0,
+          time: "",
+          tickets_bought: 0
+        }]
+      }]
+   };
+  
+  //used in create-listing to add another room
+  $scope.addRow = function(index){
+    var room = { number:0, capacity: 0};
+       if($scope.data.rooms.length <= index+1){
+            $scope.data.rooms.splice(index+1,0,room);
+        }
+    };
+
+  //used in create-listing to delete a room
+  $scope.deleteRow = function($event,number){
+  var index = $scope.data.rooms.indexOf(number);
+    if($event.which == 1)
+       $scope.data.rooms.splice(index,1);
+    };
+
+
+  //used in create-listing to add another room
+  $scope.addMovie = function(index){
+    var movie = { 
+        title:"", 
+        description:"", 
+        showings: [{
+          form: "",
+          room: 0,
+          time: "",
+          tickets_bought: 0
+        }]
+      };
+
+     if($scope.data.movies.length <= index+1){
+          $scope.data.movies.splice(index+1,0,movie);
+      }
+    };
+
+  //used in create-listing to delete a room
+  $scope.deleteMovie = function($event,title){
+  var index = $scope.data.movies.indexOf(title);
+    if($event.which == 1)
+       $scope.data.movies.splice(index,1);
+    };
 
     /* Bind the success message to the scope if it exists as part of the current state */
     if($stateParams.successMessage) {
