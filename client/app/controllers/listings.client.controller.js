@@ -212,7 +212,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
               },
               properties:{
                 name: listing.name,
-                rating: "Rating: " + listing.rating + "/5"
+                rating: listing.rating
               }
             };
 
@@ -231,13 +231,28 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
          var el = document.createElement('div');
          // Add a class called 'marker' to each div
          el.className = 'marker';
+
+         //determines which icon to use
+         var rating = marker.properties.rating;
+
+         if(rating < 1.7){
+          el.title = "notcrowdy";
+         }
+         else if (rating < 3.3){
+          el.title = "kindacrowdy";
+         }
+         else{
+          el.title = "crowdy";
+         }
+
+
          // By default the image for your custom marker will be anchored
          // by its center. Adjust the position accordingly
          // Create the custom markers, set their position, and add to map
          new mapboxgl.Marker(el, { offset: [0, -23] })
            .setLngLat(marker.geometry.coordinates)
            .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-           .setHTML('<h3>' + marker.properties.name + '</h3><p>' + marker.properties.rating + '</p>'))
+           .setHTML('<h3>' + marker.properties.name + '</h3><p> Rating:' + marker.properties.rating + '/5</p>'))
            .addTo(map);
        });
 

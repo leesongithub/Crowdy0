@@ -34,8 +34,24 @@ nav {
   height: 300px;
 }
 
-.marker {
+.marker[title="notcrowdy"]{
 background-image: url('notcrowdyicon.png');
+background-size: cover;
+width: 50px;
+height: 50px;
+cursor: pointer;
+}
+
+.marker[title="kindacrowdy"]{
+background-image: url('kindacrowdyicon.png');
+background-size: cover;
+width: 50px;
+height: 50px;
+cursor: pointer;
+}
+
+.marker[title="crowdy"]{
+background-image: url('crowdyicon.png');
 background-size: cover;
 width: 50px;
 height: 50px;
