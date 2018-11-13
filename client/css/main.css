@@ -64,14 +64,17 @@ cursor: pointer;
 }
 
 #infoboy {
+  padding: 12px;
   background-color: gold;
 }
 
 #favboy {
+  padding: 12px;
   background-color: tomato;
 }
 
 #recentboy {
+  padding: 12px;
   background-color: lightblue;
 }
 
