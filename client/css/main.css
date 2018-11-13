@@ -1,0 +1,79 @@
+#searchBar {
+  margin: 15px 10px;
+}
+
+nav {
+  margin-top: 20px;
+  margin-left: 60px;
+}
+
+.tableWrapper {
+  max-height: 500px;
+  overflow: auto;
+}
+
+#loader {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.formWrapper {
+  border-radius: 5px;
+  background-color: #e5f2ff;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+.angular-google-map-container {
+  height: 500px;
+}
+
+#map {
+  width: 400px;
+  height: 300px;
+}
+
+.marker {
+background-image: url('notcrowdyicon.png');
+background-size: cover;
+width: 50px;
+height: 50px;
+cursor: pointer;
+}
+
+#toptitle {
+  color: tomato;
+  font-style: bold;
+}
+
+#infoboy {
+  background-color: gold;
+}
+
+#favboy {
+  background-color: tomato;
+}
+
+#recentboy {
+  background-color: lightblue;
+}
+
+.resize {
+    padding-left: 150px;
+    width: 1000px;
+    height: auto;
+}
+
+.resize2 {
+  width: 44px;
+  height: 52px;
+  padding-bottom: 10px;
+}
+
+.titletext {
+  color: tomato;
+  text-align: center;
+  font-family: phosphate;
+  font-size: 60px;
+}

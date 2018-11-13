@@ -1,0 +1,70 @@
+<!-- 
+   This is the map view!  It's where the map is.
+   If you want to change is appearance, edit the #map and .marker sections of the css file
+
+   Resources:
+   https://www.mapbox.com/mapbox-gl-js/api
+   https://www.mapbox.com/help/custom-markers-gl-js
+
+   To-do:
+   1) Implement pop-ups
+   2) Join this page and the listing page
+
+   -Bridget
+-->
+
+<div ng-controller="ListingsController" >
+	<head>
+		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet'/>
+	</head>
+
+	<body>
+		<!-- Left side column (search bar, information) -->
+		<div class="col-md-4">
+			<!-- Search Bar on top of Map -->
+			<div class="input-group" id="searchBar">
+    		  <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
+    		  <input type="text" class="form-control" placeholder="Search by name, movie, or location!" ng-model="globalSearch.$"><br>
+    		</div>
+
+    		<!-- Jumbotron to display information -->
+    		<div class="jumbotron" id="infoboy">
+    			<h2 id="entryName">Theater Info:</h2>
+           		<table>
+            	  <tr><td>Crowdedness:</td><td> <p id="entryCrowdedness1"></p></td></tr>
+            	  <tr><td>Rating:</td><td>  <p id="entryRating1"></p></td></tr>
+            	  <tr><td>Address:</td><td> <p id="entryAddress1"></p></td></tr>
+            	</table>
+    		</div>
+
+    		<!-- Favorite Theater, same jumbotron display -->
+    		<div class="jumbotron" id="favboy">
+    			<h2 id="entryName">Favorite Theater:</h2>
+           		<table>
+            	  <tr><td>Crowdedness:</td><td> <p id="entryCrowdedness">     </p></td></tr>
+            	  <tr><td>Rating:</td><td>  <p id="entryRating"> 	          </p></td></tr>
+            	  <tr><td>Address:</td><td> <p id="entryAddress"> {{listing.address}}            </p></td></tr>
+            	</table>
+    		</div>    	
+
+    		<!-- Most Recent Theater, same jumbotron display --> 
+    		<div class="jumbotron" id="recentboy">
+    			<h2 id="entryName">Most Recent Theater:</h2>
+           		<table>
+            	  <tr><td>Crowdedness:</td><td> <p id="entryCrowdedness">     </p></td></tr>
+            	  <tr><td>Rating:</td><td>  <p id="entryRating"> 	          </p></td></tr>
+            	  <tr><td>Address:</td><td> <p id="entryAddress"> {{listing.address}}            </p></td></tr>
+            	</table>
+    		</div>	
+
+    	</div>
+
+    	<!-- Right side column (map) -->
+    	<div class="col-md-8">
+			<div id='map' style='width: 890px; height: 700px;' ng-init="createMap()" ng-click="showDetails(e)"></div>
+			<script type="text/javascript" src="/../controllers/listings.client.controller.js">		
+			</script>	
+		</div>
+	</body>
+</div>
