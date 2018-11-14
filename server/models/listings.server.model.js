@@ -17,6 +17,20 @@ var listingSchema = new Schema({
   crowdedness: Number,
   rating: Number, 
   coordinates: [Number, Number],
+   movies: [{
+    title: String, 
+    description: String, 
+    showings: [{
+      form: String,
+      room: Number,
+      time: Date,
+      tickets_bought: Number
+    }]
+  }], 
+  rooms: [{
+    number: Number,
+    capacity: Number
+  }],
   created_at: Date,
   updated_at: Date
 });
