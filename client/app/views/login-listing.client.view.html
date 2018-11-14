@@ -120,12 +120,12 @@
             <div class="container" >
                 <label> <b>Email</b></label>
                 <div class="row">
-                    <input id="login_email_input" type="text" placeholder="Please enter email">
+                    <input id="sign_up_email_input" type="text" placeholder="Please enter email">
                 </div>
 
                 <label> <b>Password</b></label>
                 <div class="row">
-                    <input id="login_password_input" type="password" placeholder="Create a secure password">
+                    <input id="sign_up_password_input" type="password" placeholder="Create a secure password">
                 </div>
 
                 <div class="row">
@@ -164,6 +164,9 @@
     var txtEmail=document.getElementById("login_email_input");
     var txtPassword=document.getElementById("login_password_input");
 
+    var newEmail=document.getElementById("sign_up_email_input");
+    var newPassword=document.getElementById("sign_up_password_input");
+
     var login_btn=document.getElementById("login_btn");
     var new_usr_btn=document.getElementById("new_usr_btn");
     
@@ -181,15 +184,15 @@
     });
 
     new_usr_btn.addEventListener("click",e =>{
-      const email = txtEmail.value;
-      const password = txtPassword.value;
+      const email = newEmail.value;
+      const password = newPassword.value;
       firebase.initializeApp(config);
       const auth=firebase.auth();
        auth.createUserWithEmailAndPassword(email, password).then(function(){
         // this runs if the promise is returned successfully
         console.log("New User Creation Successful, redirecting to Index");
         window.location.href = "../../index.html";
-       }).catch(e =>console.log(e.message) );
+       });//.catch(e =>console.log(e.message) );
 
     });
 
