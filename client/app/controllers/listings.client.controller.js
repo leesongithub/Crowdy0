@@ -271,6 +271,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         console.log(features);
         $scope.listings.forEach(function(listing) {
           if(geojson.features[0].geometry.coordinates == listing.coordinates) {
+            document.getElementById("entryName1").innerText = listing.name;
             document.getElementById("entryCrowdedness1").innerText = listing.crowdedness;
             document.getElementById("entryRating1").innerText = listing.rating;
             document.getElementById("entryAddress1").innerText = listing.address;
