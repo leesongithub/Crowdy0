@@ -39,11 +39,11 @@ angular.module('listings').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: 'app/views/view-listing.client.view.html'
       })
       .state('listings.theater', {
-        url: '/:theater',
+        url: '/listings/theater',
         templateUrl: 'app/views/theater-listing.client.view.html'
       })
       .state('listings.login', {
-            url: '/:login',
+            url: '/listings/login',
             templateUrl: 'app/views/login-listing.client.view.html'
       })
 
