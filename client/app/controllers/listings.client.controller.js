@@ -252,7 +252,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
          new mapboxgl.Marker(el, { offset: [0, -23] })
            .setLngLat(marker.geometry.coordinates)
            .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-           .setHTML('<h3 style="font-family: phosphate;">' + marker.properties.name + '</h3><p style="text-align: center; font-size: 16px;"> Rating: ' + marker.properties.rating + ' out of 5 stars</p>'))
+           .setHTML('<h3 style="font-family: phosphate;">' + marker.properties.name + '</h3><p style="text-align: center; font-size: 16px;"> Rating: ' + marker.properties.rating + ' out of 5 stars</p> <form action="/listings/theater"><input type="submit" value=' + marker.properties.name + '/></form>'))
            .addTo(map);
        });
 
