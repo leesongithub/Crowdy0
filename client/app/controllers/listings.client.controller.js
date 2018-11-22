@@ -54,6 +54,37 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
               });
     };  
 
+    $scope.getTheater = function() {
+      debugger;
+      $scope.loading = true;
+      var theaterName = $stateParams.theaterName;
+      var id;
+      console.log(theaterName);
+
+      Listings.forEach(function(listing) {
+        if (listing.name == theaterName) {
+          id = listing._id;
+        }
+      });
+
+      Listings.read(id).then(function(response) {
+        $scope.listing = response.data;
+
+        $scope.name = $scope.listing.name;
+        $scope.rating = $scope.listing.rating;
+        $scope.address = $scope.listing.address;
+        $scope.crowdedness = $scope.listing.crowdedness;
+        $scope.data.rooms = $scope.listing.rooms;
+        $scope.data.movies = $scope.listing.movies;
+
+        $scope.loading = false;
+      }, function(error) {  
+        $scope.error = 'Unable to retrieve listing with id "' + id + '"\n' + error;
+        $scope.loading = false;
+      });
+
+    };
+
     $scope.create = function(isValid) {
       $scope.error = null;
 
@@ -252,7 +283,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
          new mapboxgl.Marker(el, { offset: [0, -23] })
            .setLngLat(marker.geometry.coordinates)
            .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-           .setHTML('<h3 style="font-family: phosphate;">' + marker.properties.name + '</h3><p style="text-align: center; font-size: 16px;"> Rating: ' + marker.properties.rating + ' out of 5 stars</p> <form action="/listings/theater"><input type="submit" value=' + marker.properties.name + '/></form>'))
+           .setHTML('<h3 style="font-family: phosphate;">' + marker.properties.name + '</h3><p style="text-align: center; font-size: 16px;"> Rating: ' + marker.properties.rating + ' out of 5 stars</p> <form action="listings.theater({ theaterName: ' + marker.properties.name + '})"><input type="submit"/></form>'))
            .addTo(map);
        });
 

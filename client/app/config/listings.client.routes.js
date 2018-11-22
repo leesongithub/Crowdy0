@@ -39,8 +39,8 @@ angular.module('listings').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: 'app/views/view-listing.client.view.html'
       })
       .state('listings.theater', {
-        url: '/listings/theater',
-        templateUrl: 'app/views/theater-listing.client.view.html'
+        url: '/listings/:theaterName',
+        templateUrl: 'app/views/theater-listings.client.view.html'
       })
       .state('listings.login', {
             url: '/listings/login',
