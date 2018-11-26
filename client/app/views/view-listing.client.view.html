@@ -7,8 +7,40 @@
       <img id="loader" ng-show="loading" src="/../../img/484.gif">
       <div ng-show="listing">
         <h2>{{listing.name}}</h2>
-        <p>Building Rating: {{listing.rating}}</p>
         <p>Address: {{listing.address}}</p>
+        <p>Crowdedness Rating: {{listing.rating}}/5</p>
+        <p>Visitor Crowdedness Rating: {{listing.crowdedness}}</p>
+        <h3>Rooms</h3>
+        <table>
+          <tr>
+            <td>Number</td>
+            <td>Capacity</td>
+          </tr>
+          <tr ng-repeat="room in listing.rooms">
+            <td>{{room.number}}</td>
+            <td>{{room.capacity}}</td>
+          </tr>
+        </table>
+        <h3>Movies</h3>
+        <table>
+          <tr ng-repeat="movie in listing.movies">
+            <td>
+              Title: <br> {{movie.title}} <br>
+              Description: <br> {{movie.description}} <br>
+              Showings: <br> {{movie.title}} <br>
+              <table>
+                <tr ng-repeat="showing in movie.showings">
+                  <td>
+                    Form: {{showing.form}} <br>
+                    Room: {{showing.room}}
+                    Time: {{showing.time}} <br>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        
         <a class="btn btn-primary" ui-sref="listings.edit({ listingId: listing._id })">
           <i class="glyphicon glyphicon-edit"></i>
           Edit
