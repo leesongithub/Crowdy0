@@ -20,10 +20,10 @@
             </div>
           </div>
           <div class="form-group" show-errors>
-            <label for="rating">Rating</label>
-            <input name="rating" type="text" ng-model="rating" id="rating" class="form-control" placeholder="Rating" required>
+            <label for="rating">Crowdedness</label>
+            <input name="rating" type="text" ng-model="rating" id="rating" class="form-control" placeholder="Crowdedness (number out of 5)" required>
             <div ng-messages="listingForm.rating.$error" role="alert">
-              <p class="help-block error-text" ng-message="required">Listing rating is required</p>
+              <p class="help-block error-text" ng-message="required">Crowdedness is required</p>
             </div>
           </div>
           <div class="form-group">
@@ -31,7 +31,7 @@
             <input name="address" type="text" ng-model="address" id="address" class="form-control" placeholder="Address">
           </div>
           <div class="form-group">
-            <label for="crowdedness">Crowdedness (number out of 5)</label>
+            <label for="crowdedness">User-Rated Crowdedness (number out of 5)</label>
             <input name="crowdedness" type="text" ng-model="crowdedness" id="crowdedness" class="form-control" placeholder="Crowdedness">
           </div>
           <div class="form-group">
