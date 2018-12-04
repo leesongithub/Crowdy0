@@ -3,6 +3,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         var map, geojson;
         $scope.find = function() {
             /* set loader*/
+            console.log('line number' + 6 +"\n");
             $scope.loading = true;
 
             /* Get all the listings, then bind it to the scope */
@@ -93,7 +94,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
 
                 return false;
             }
-
+console.log('line number' + 96 +"\n");
             /* Create the listing object */
             var listing = {
                 name: $scope.name,
@@ -146,6 +147,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
               occurs, pass it to $scope.error.
              */
             $scope.error = null;
+            console.log('line number' + 149 +"\n");
 
             /*
               Check that the form is valid. (https://github.com/paulyoder/angular-bootstrap-show-errors)
@@ -193,15 +195,16 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
 
         //Creates a MapBox map with markers for each listing
         $scope.createMap = function() {
-
+console.log('line number' + 198 +"\n");
             /* set loader*/
             $scope.loading = true;
-
+            // alert("hey1");
+            
             /* Get all the listings, then bind it to the scope */
             Listings.getAll().then(function(response) {
                 $scope.loading = false; //remove loader
                 $scope.listings = response.data;
-
+    console.log('line number' + 205 +"\n");
                 // mapboxgl.accessToken = 'pk.eyJ1IjoiYmhvbWVyIiwiYSI6ImNqbmRzYmNyZjA2em8za245dDFueDllbHoifQ.MtcTAOAiOWUoHyrfbcjeVQ';
                 // map = new mapboxgl.Map({
                 //     container: 'map',
@@ -273,7 +276,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
                         features: []
                     };
 
-
+                    /* PLaces the current theaters as map markers */
                     $scope.listings.forEach(function(listing) {
                         var newGeo = {
                             type: 'Feature',
@@ -289,13 +292,13 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
 
                         geojson.features.push(newGeo);
                     });
-
+                    // place the markers
                     map.on('load', function(e) {
                         map.addSource('locations', {
                             type: 'geojson',
                             data: geojson
                         });
-                    })
+                    });
 
                     geojson.features.forEach(function(marker) {
                         // Create a div element for the marker

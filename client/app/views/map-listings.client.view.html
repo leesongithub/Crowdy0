@@ -9,8 +9,8 @@
 
 <div ng-controller="ListingsController" >
 	<head>
-		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
-		<script src='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+		<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js"></script>
+		<script src="https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js"></script>
 
 		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet'/>
 	</head>
@@ -61,11 +61,10 @@
 
     	</div>
 
-    	<!-- Right side column (map) -->
+    	<!-- Right side column (map)  THIS DIV HAS ISSUES -->
     	<div class="col-md-8">
-			<div id='map' style='width: 890px; height: 700px;' ng-init="createMap()" ng-click="showDetails(e)"></div>
-			<script type="text/javascript" src="/../controllers/listings.client.controller.js">		
-			</script>	
+			<div id='map' style='width: 890px; height: 700px;' ng-init="createMap()" ng-click="showDetails(e)"></div> <!-- calls line 197 -->
+			<script src="../controllers/listings.client.controller.js">	</script>	
 		</div>
 	</body>
 </div>
