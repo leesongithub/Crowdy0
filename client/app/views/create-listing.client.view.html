@@ -43,7 +43,7 @@
                   <input type="text" ng-model="data.rooms[$index].number" class="form-control" placeholder="Room Number"> 
                   <p> Room Capacity </p> 
                   <input type="text" ng-model="data.rooms[$index].capacity" class="form-control" placeholder="Room Capacity">
-                  <input type="button" class="btn btn-info" ng-click="addRow($index)" value="Add Room" ng-show=$last>
+                  <input type="button" class="btn btn-info" ng-click="addRow($index)" value="Add Another Room" ng-show=$last>
                    <input type="button" ng-click="deleteRow($event,number)" value="Delete Room" ng-show="$index != 0">
                 </td>
              </tr> 
