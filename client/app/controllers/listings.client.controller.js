@@ -306,10 +306,10 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
                         //determines which icon to use
                         var rating = marker.properties.rating;
 
-                        if(rating < 33.33){
+                        if(rating < 40){
                             el.title = "notcrowdy";
                         }
-                        else if (rating < 66.66){
+                        else if (rating < 70){
                             el.title = "kindacrowdy";
                         }
                         else{

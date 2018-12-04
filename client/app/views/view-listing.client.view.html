@@ -6,28 +6,44 @@
     <div class="jumbotron">
       <img id="loader" ng-show="loading" src="/../../img/484.gif">
       <div ng-show="listing">
+        <!-- First section: Theater name, then address, crowdedness, rated crowdedness -->
         <h2>{{listing.name}}</h2>
-        <p>Address: {{listing.address}}</p>
-        <p>Crowdedness Rating: {{listing.rating}}/5</p>
-        <p>Visitor Crowdedness Rating: {{listing.crowdedness}}</p>
-        <h3>Rooms</h3>
-        <table>
-          <tr>
-            <td>Number</td>
-            <td>Capacity</td>
-          </tr>
-          <tr ng-repeat="room in listing.rooms">
-            <td>{{room.number}}</td>
-            <td>{{room.capacity}}</td>
-          </tr>
-        </table>
-        <h3>Movies</h3>
+
+          <p>Address: {{listing.address}}</p>
+          <p>Crowdedness: {{listing.rating}}%</p>
+          <p>Rating: {{listing.crowdedness}} stars out of 5</p>
+        
+        <!-- Second section: Rooms (number and capacity) --> 
+        <h3 ng-repeat="room in listing.rooms">Room #{{room.number}}  –  Capacity of {{room.capacity}} people</h3>
+          
+          <!-- reformatted this code into the even neater code above ^^^ 
+          <p ng-repeat="room in listing.rooms">Number: {{room.number}} rooms</p>
+          <p ng-repeat="room in listing.rooms">Capacity: {{room.capacity}}</p>
+          -->
+
+          <!-- reformatted this code into the neater code above ^^
+          <table>
+            <tr>
+              <td>Number</td>
+              <td>Capacity</td>
+            </tr>
+            <tr ng-repeat="room in listing.rooms">
+              <td>{{room.number}}</td>
+              <td>{{room.capacity}}</td>
+            </tr>
+          </table>
+          -->
+
+        <!-- Third section: other information -->
+        <h2>Movies</h2>
+        
         <table>
           <tr ng-repeat="movie in listing.movies">
             <td>
               <p>Title: {{movie.title}} </p><br>
               <p>Description: {{movie.description}} </p><br>
               <p>Showings: {{movie.title}} </p><br>
+              
               <table>
                 <tr ng-repeat="showing in movie.showings">
                   <td>
