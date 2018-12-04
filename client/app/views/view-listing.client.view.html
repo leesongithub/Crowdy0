@@ -25,15 +25,15 @@
         <table>
           <tr ng-repeat="movie in listing.movies">
             <td>
-              Title: <br> {{movie.title}} <br>
-              Description: <br> {{movie.description}} <br>
-              Showings: <br> {{movie.title}} <br>
+              <p>Title: {{movie.title}} </p><br>
+              <p>Description: {{movie.description}} </p><br>
+              <p>Showings: {{movie.title}} </p><br>
               <table>
                 <tr ng-repeat="showing in movie.showings">
                   <td>
-                    Form: {{showing.form}} <br>
-                    Room: {{showing.room}}
-                    Time: {{showing.time}} <br>
+                    <p>Form: {{showing.form}} </p><br>
+                    <p>Room: {{showing.room}} </p><br>
+                    <p>Time: {{showing.time}} </p><br>
                   </td>
                 </tr>
               </table>
