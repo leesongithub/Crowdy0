@@ -306,10 +306,10 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
                         //determines which icon to use
                         var rating = marker.properties.rating;
 
-                        if(rating < 1.7){
+                        if(rating < 40){
                             el.title = "notcrowdy";
                         }
-                        else if (rating < 3.3){
+                        else if (rating < 70){
                             el.title = "kindacrowdy";
                         }
                         else{
@@ -323,7 +323,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
                         new mapboxgl.Marker(el, { offset: [0, -23] })
                             .setLngLat(marker.geometry.coordinates)
                             .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-                                .setHTML('<h3 style="font-family: phosphate;">' + marker.properties.name + '</h3><p style="text-align: center; font-size: 16px;"> Crowdedness: ' + marker.properties.rating + ' out of 5</p>'))
+                                .setHTML('<h3 style="font-family: phosphate;">' + marker.properties.name + '</h3><p style="text-align: center; font-size: 16px;"> Crowdedness: ' + marker.properties.rating + '%</p>'))
                             .addTo(map);
                     });
 
