@@ -16,7 +16,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         };
 
         $scope.findOne = function() {
-            debugger;
+            // debugger;
             $scope.loading = true;
 
             /*
@@ -51,36 +51,36 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
                 });
         };
 
-        $scope.getTheater = function() {
-            debugger;
-            $scope.loading = true;
-            var theaterName = $stateParams.theaterName;
-            var id;
-            console.log(theaterName);
-
-            Listings.forEach(function(listing) {
-                if (listing.name == theaterName) {
-                    id = listing._id;
-                }
-            });
-
-            Listings.read(id).then(function(response) {
-                $scope.listing = response.data;
-
-                $scope.name = $scope.listing.name;
-                $scope.rating = $scope.listing.rating;
-                $scope.address = $scope.listing.address;
-                $scope.crowdedness = $scope.listing.crowdedness;
-                $scope.data.rooms = $scope.listing.rooms;
-                $scope.data.movies = $scope.listing.movies;
-
-                $scope.loading = false;
-            }, function(error) {
-                $scope.error = 'Unable to retrieve listing with id "' + id + '"\n' + error;
-                $scope.loading = false;
-            });
-
-        };
+        // $scope.getTheater = function() {
+        //     // debugger;
+        //     $scope.loading = true;
+        //     var theaterName = $stateParams.theaterName;
+        //     var id;
+        //     console.log(theaterName);
+        //
+        //     Listings.forEach(function(listing) {
+        //         if (listing.name == theaterName) {
+        //             id = listing._id;
+        //         }
+        //     });
+        //
+        //     Listings.read(id).then(function(response) {
+        //         $scope.listing = response.data;
+        //
+        //         $scope.name = $scope.listing.name;
+        //         $scope.rating = $scope.listing.rating;
+        //         $scope.address = $scope.listing.address;
+        //         $scope.crowdedness = $scope.listing.crowdedness;
+        //         $scope.data.rooms = $scope.listing.rooms;
+        //         $scope.data.movies = $scope.listing.movies;
+        //
+        //         $scope.loading = false;
+        //     }, function(error) {
+        //         $scope.error = 'Unable to retrieve listing with id "' + id + '"\n' + error;
+        //         $scope.loading = false;
+        //     });
+        //
+        // };
 
         $scope.create = function(isValid) {
             $scope.error = null;
@@ -247,7 +247,24 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
                         },
                         trackUserLocation: true
                     }));
+                    map.on('click', function(e) {
+                        var features = e.lngLat;
 
+                        var lat = Math.round(features.lat * 100000) / 100000;
+                        var long = Math.round(features.lng * 100000) / 100000;
+
+                        $scope.listings.forEach(function(listing) {
+                            console.log(listing.coordinates);
+                            if(listing.coordinates[0] < (long + .002) && listing.coordinates[0] > (long - .002)) {
+                                if(listing.coordinates[1] < (lat + .002) && listing.coordinates[1] > (lat - .002)) {
+                                    document.getElementById("entryName1").innerText = listing.name;
+                                    document.getElementById("entryCrowdedness1").innerText = listing.crowdedness;
+                                    document.getElementById("entryRating1").innerText = listing.rating;
+                                    document.getElementById("entryAddress1").innerText = listing.address;
+                                }
+                            }
+                        });
+                    });
 
                     //create a GeoJSON skeleton
                     geojson = {
@@ -321,27 +338,27 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
                 $scope.error = 'Unable to retrieve listings!\n' + error;
             });
         }
-        var possible_coordinate_set=[];
-        $scope.showDetails = function(e) {
-            map.on('click', function(e) {
-                var features = e.lngLat;
-
-                var lat = Math.round(features.lat * 100000) / 100000;
-                var long = Math.round(features.lng * 100000) / 100000;
-
-                $scope.listings.forEach(function(listing) {
-                    console.log(listing.coordinates);
-                    if(listing.coordinates[0] < (long + .002) && listing.coordinates[0] > (long - .002)) {
-                        if(listing.coordinates[1] < (lat + .002) && listing.coordinates[1] > (lat - .002)) {
-                            document.getElementById("entryName1").innerText = listing.name;
-                            document.getElementById("entryCrowdedness1").innerText = listing.crowdedness;
-                            document.getElementById("entryRating1").innerText = listing.rating;
-                            document.getElementById("entryAddress1").innerText = listing.address;
-                        }
-                    }
-                });
-            });
-        }
+        // var possible_coordinate_set=[];
+        // $scope.showDetails = function(e) {
+        //     map.on('click', function(e) {
+        //         var features = e.lngLat;
+        //
+        //         var lat = Math.round(features.lat * 100000) / 100000;
+        //         var long = Math.round(features.lng * 100000) / 100000;
+        //
+        //         $scope.listings.forEach(function(listing) {
+        //             console.log(listing.coordinates);
+        //             if(listing.coordinates[0] < (long + .002) && listing.coordinates[0] > (long - .002)) {
+        //                 if(listing.coordinates[1] < (lat + .002) && listing.coordinates[1] > (lat - .002)) {
+        //                     document.getElementById("entryName1").innerText = listing.name;
+        //                     document.getElementById("entryCrowdedness1").innerText = listing.crowdedness;
+        //                     document.getElementById("entryRating1").innerText = listing.rating;
+        //                     document.getElementById("entryAddress1").innerText = listing.address;
+        //                 }
+        //             }
+        //         });
+        //     });
+        // }
 
         //initializes room and movie array
         $scope.data ={
