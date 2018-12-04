@@ -1,8 +1,17 @@
 /* register the modules the application depends upon here*/
-angular.module('listings', []);
+// import { AngularFireModule } from 'angularfire2';
+// var firebaseConfig = {
+//     apiKey: "AIzaSyD3Z7koK5KJLv1V5HjB_keGFn6UaLOZ_TE",
+//     authDomain: "redtelephone-d8560.firebaseapp.com",
+//     databaseURL: "https://redtelephone-d8560.firebaseio.com",
+//     projectId: "redtelephone-d8560",
+//     storageBucket: "redtelephone-d8560.appspot.com",
+//     messagingSenderId: "863132904116"
+// };
+angular.module('listings', ['firebase']);
 
 /* register the application and inject all the necessary dependencies */
-var app = angular.module('directoryApp', ['ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'listings']);
+var app = angular.module('directoryApp', ['ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'listings','firebase']);
 
 /* application configuration */
 app.config(['$urlRouterProvider', '$locationProvider',
@@ -14,6 +23,14 @@ app.config(['$urlRouterProvider', '$locationProvider',
     $urlRouterProvider.otherwise('/listings');
   }
 ]);
+// ini.factory("Auth", ["$firebaseAuth",
+//     function($firebaseAuth) {
+//         // var ref = new Firebase("https://redtelephone-d8560.firebaseio.com");
+//         // return firebase.auth().ref();
+//         return $firebaseAuth(firebase);
+//         // return $firebaseAuth(ref);
+//     }
+// ]);
 
 /* set the initial state of the application */
 app.run(['$state', 

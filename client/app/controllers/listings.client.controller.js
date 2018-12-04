@@ -1,6 +1,32 @@
-angular.module('listings').controller('ListingsController', ['$scope', '$location', '$stateParams', '$state', 'Listings',
-    function($scope, $location, $stateParams, $state, Listings){
+angular.module('listings').controller('ListingsController', ['$scope', '$location', '$stateParams', '$state', 'Listings', '$state', '$http', '$firebase','$firebaseAuth','$firebaseObject','$firebaseArray',
+    function($scope, $location, $stateParams, $state, Listings, $http, $firebaseAuth,$firebaseObject,$firebaseArray){
+        // var ref = firebase.database().ref;
+        var sync=$firebaseArray;
+        $scope.messages = sync;
+        $scope.addMessage = function(text) {
+            $scope.messages.$add({text: text});
+        };
+
+        var auth=$firebaseAuth();
         var map, geojson;
+        $scope.auth = $firebaseAuth();
+        // $scope.auth.$onAuth(function(authData) {
+        //     $scope.authData = authData;
+        // });
+        $scope.login = function() {
+            $scope.auth.$authWithPassword({
+                email: $scope.email,
+                password: $scope.password
+            })
+                .then(function(authData) {
+                    console.log('Logged in as:', authData.uid);
+                    //$state.go('profile');
+                })
+                .catch(function(err) {
+                    console.log('error:',err);
+                    //$state.go('login');
+                });
+        };
         $scope.find = function() {
             /* set loader*/
             $scope.loading = true;
@@ -420,5 +446,36 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         if($stateParams.successMessage) {
             $scope.success = $stateParams.successMessage;
         }
+
     }
 ]);
+
+// app.factory("Auth", ["$firebaseAuth",
+//     function($firebaseAuth) {
+//         var ref = new Firebase("https://redtelephone-d8560.firebaseio.com");
+//         return $firebaseAuth(ref);
+//     }
+// ]);
+
+// app.controller('loginCtrl', ['$scope', '$state', '$http', 'Auth',
+//     function($scope, $state, $http, Auth) {
+//         $scope.auth = Auth;
+//         $scope.auth.$onAuth(function(authData) {
+//             $scope.authData = authData;
+//         });
+//         $scope.login = function() {
+//             Auth.$authWithPassword({
+//                 email: $scope.email,
+//                 password: $scope.password
+//             })
+//                 .then(function(authData) {
+//                     console.log('Logged in as:', authData.uid);
+//                     //$state.go('profile');
+//                 })
+//                 .catch(function(err) {
+//                     console.log('error:',err);
+//                     //$state.go('login');
+//                 });
+//         };
+//     }
+// ]);
