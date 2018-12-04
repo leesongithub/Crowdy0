@@ -261,6 +261,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
                                     document.getElementById("entryCrowdedness1").innerText = listing.crowdedness;
                                     document.getElementById("entryRating1").innerText = listing.rating;
                                     document.getElementById("entryAddress1").innerText = listing.address;
+                                    $scope.entryID1 = listing._id;
                                 }
                             }
                         });
@@ -322,7 +323,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
                         new mapboxgl.Marker(el, { offset: [0, -23] })
                             .setLngLat(marker.geometry.coordinates)
                             .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-                                .setHTML('<h3 style="font-family: phosphate;">' + marker.properties.name + '</h3><p style="text-align: center; font-size: 16px;"> Crowdedness: ' + marker.properties.rating + ' out of 5</p> <form action="listings.theater({ theaterName: ' + marker.properties.name + '})"><input type="submit"/></form>'))
+                                .setHTML('<h3 style="font-family: phosphate;">' + marker.properties.name + '</h3><p style="text-align: center; font-size: 16px;"> Crowdedness: ' + marker.properties.rating + ' out of 5</p>'))
                             .addTo(map);
                     });
 
