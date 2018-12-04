@@ -202,92 +202,119 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
                 $scope.loading = false; //remove loader
                 $scope.listings = response.data;
 
-
-                mapboxgl.accessToken = 'pk.eyJ1IjoiYmhvbWVyIiwiYSI6ImNqbmRzYmNyZjA2em8za245dDFueDllbHoifQ.MtcTAOAiOWUoHyrfbcjeVQ';
-                map = new mapboxgl.Map({
-                    container: 'map',
-                    style: 'mapbox://styles/mapbox/streets-v9',
-                    center: [-82.3645, 29.6301], //starting coordinates (g-ville) in [long, lat]
-                    zoom: 13 //starting zoom
-                });
-                if(!mapboxgl) alert("oops!");
-
-
-
-                // Add zoom and rotation controls to the map.
-                map.addControl(new mapboxgl.NavigationControl());
-
-                // Add geolocate control to the map.
-                map.addControl(new mapboxgl.GeolocateControl({
-                    positionOptions: {
-                        enableHighAccuracy: true
-                    },
-                    trackUserLocation: true
-                }));
-
-
-                //create a GeoJSON skeleton
-                geojson = {
-                    type: 'FeatureCollection',
-                    features: []
-                };
-
-
-                $scope.listings.forEach(function(listing) {
-                    var newGeo = {
-                        type: 'Feature',
-                        geometry: {
-                            type: 'Point',
-                            coordinates: listing.coordinates
-                        },
-                        properties:{
-                            name: listing.name,
-                            rating: listing.rating
+                // mapboxgl.accessToken = 'pk.eyJ1IjoiYmhvbWVyIiwiYSI6ImNqbmRzYmNyZjA2em8za245dDFueDllbHoifQ.MtcTAOAiOWUoHyrfbcjeVQ';
+                // map = new mapboxgl.Map({
+                //     container: 'map',
+                //     style: 'mapbox://styles/mapbox/streets-v9',
+                //     center: [-82.3645, 29.6301], //starting coordinates (g-ville) in [long, lat]
+                //     zoom: 13 //starting zoom
+                // });
+                var JavaScript = {
+                    load: function(src, callback) {
+                        var script = document.createElement('script'),
+                            loaded;
+                        script.setAttribute('src', src);
+                        if (callback) {
+                            script.onreadystatechange = script.onload = function() {
+                                if (!loaded) {
+                                    callback();
+                                }
+                                loaded = true;
+                            };
                         }
+                        document.getElementsByTagName('head')[0].appendChild(script);
+                    }
+                };
+                JavaScript.load("https://api.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.js", function() {
+                    mapboxgl.accessToken = 'pk.eyJ1IjoiYmhvbWVyIiwiYSI6ImNqbmRzYmNyZjA2em8za245dDFueDllbHoifQ.MtcTAOAiOWUoHyrfbcjeVQ';
+                    map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/mapbox/streets-v9',
+                        center: [-82.3645, 29.6301], //starting coordinates (g-ville) in [long, lat]
+                        zoom: 13 //starting zoom
+                    });
+                    if(!mapboxgl) alert("oops!");
+
+
+
+                    // Add zoom and rotation controls to the map.
+                    map.addControl(new mapboxgl.NavigationControl());
+
+                    // Add geolocate control to the map.
+                    map.addControl(new mapboxgl.GeolocateControl({
+                        positionOptions: {
+                            enableHighAccuracy: true
+                        },
+                        trackUserLocation: true
+                    }));
+
+
+                    //create a GeoJSON skeleton
+                    geojson = {
+                        type: 'FeatureCollection',
+                        features: []
                     };
 
-                    geojson.features.push(newGeo);
-                });
 
-                map.on('load', function(e) {
-                    map.addSource('locations', {
-                        type: 'geojson',
-                        data: geojson
+                    $scope.listings.forEach(function(listing) {
+                        var newGeo = {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: listing.coordinates
+                            },
+                            properties:{
+                                name: listing.name,
+                                rating: listing.rating
+                            }
+                        };
+
+                        geojson.features.push(newGeo);
                     });
-                })
 
-                geojson.features.forEach(function(marker) {
-                    // Create a div element for the marker
-                    var el = document.createElement('div');
-                    // Add a class called 'marker' to each div
-                    el.className = 'marker';
+                    map.on('load', function(e) {
+                        map.addSource('locations', {
+                            type: 'geojson',
+                            data: geojson
+                        });
+                    })
 
-                    //determines which icon to use
-                    var rating = marker.properties.rating;
+                    geojson.features.forEach(function(marker) {
+                        // Create a div element for the marker
+                        var el = document.createElement('div');
+                        // Add a class called 'marker' to each div
+                        el.className = 'marker';
 
-                    if(rating < 1.7){
-                        el.title = "notcrowdy";
-                    }
-                    else if (rating < 3.3){
-                        el.title = "kindacrowdy";
-                    }
-                    else{
-                        el.title = "crowdy";
-                    }
+                        //determines which icon to use
+                        var rating = marker.properties.rating;
+
+                        if(rating < 1.7){
+                            el.title = "notcrowdy";
+                        }
+                        else if (rating < 3.3){
+                            el.title = "kindacrowdy";
+                        }
+                        else{
+                            el.title = "crowdy";
+                        }
 
 
-                    // By default the image for your custom marker will be anchored
-                    // by its center. Adjust the position accordingly
-                    // Create the custom markers, set their position, and add to map
-                    new mapboxgl.Marker(el, { offset: [0, -23] })
-                        .setLngLat(marker.geometry.coordinates)
-                        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-                            .setHTML('<h3 style="font-family: phosphate;">' + marker.properties.name + '</h3><p style="text-align: center; font-size: 16px;"> Rating: ' + marker.properties.rating + ' out of 5 stars</p> <form action="listings.theater({ theaterName: ' + marker.properties.name + '})"><input type="submit"/></form>'))
-                        .addTo(map);
+                        // By default the image for your custom marker will be anchored
+                        // by its center. Adjust the position accordingly
+                        // Create the custom markers, set their position, and add to map
+                        new mapboxgl.Marker(el, { offset: [0, -23] })
+                            .setLngLat(marker.geometry.coordinates)
+                            .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                                .setHTML('<h3 style="font-family: phosphate;">' + marker.properties.name + '</h3><p style="text-align: center; font-size: 16px;"> Rating: ' + marker.properties.rating + ' out of 5 stars</p> <form action="listings.theater({ theaterName: ' + marker.properties.name + '})"><input type="submit"/></form>'))
+                            .addTo(map);
+                    });
+
                 });
+
+
 
                 //makes the map available to the view
-                module.exports = map;
+                // module.exports = map;
 
             }, function(error) {
                 $scope.loading = false;
