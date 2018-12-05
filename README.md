@@ -8,7 +8,7 @@ Clone this repository your usual way, then simply run:
 $node server.js
 ```
 
-Then visit [**localhost:8080**](https://localhost:8080) in your browser, and enjoy exploring our site! 
+Then visit [**localhost:8080**](localhost:8080) in your browser, and enjoy exploring our site! 
 
 ## Features
 The core features of this website are the map API (from MapBox) with colored indicators for each theater, that gets data fed into the database by users. Additional features we implemented include login for theater owners and users, a voting system, and other methods of displaying information.
