@@ -3,7 +3,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         var map, geojson;
         $scope.find = function() {
             /* set loader*/
-            console.log('line number' + 6 +"\n");
+            //console.log('line number' + 6 +"\n");
             $scope.loading = true;
 
             /* Get all the listings, then bind it to the scope */
@@ -58,29 +58,29 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         //     var theaterName = $stateParams.theaterName;
         //     var id;
         //     console.log(theaterName);
-        //
+        
         //     Listings.forEach(function(listing) {
         //         if (listing.name == theaterName) {
         //             id = listing._id;
         //         }
         //     });
-        //
+        
         //     Listings.read(id).then(function(response) {
         //         $scope.listing = response.data;
-        //
+        
         //         $scope.name = $scope.listing.name;
         //         $scope.rating = $scope.listing.rating;
         //         $scope.address = $scope.listing.address;
         //         $scope.crowdedness = $scope.listing.crowdedness;
         //         $scope.data.rooms = $scope.listing.rooms;
         //         $scope.data.movies = $scope.listing.movies;
-        //
+        
         //         $scope.loading = false;
         //     }, function(error) {
         //         $scope.error = 'Unable to retrieve listing with id "' + id + '"\n' + error;
         //         $scope.loading = false;
         //     });
-        //
+        
         // };
 
         $scope.create = function(isValid) {
@@ -101,6 +101,7 @@ console.log('line number' + 96 +"\n");
                 rating: $scope.rating,
                 address: $scope.address,
                 crowdedness: $scope.crowdedness,
+                votes: 1,
                 rooms: [{
                     number: $scope.data.rooms[0].number,
                     capacity: $scope.data.rooms[0].capacity
@@ -162,8 +163,12 @@ console.log('line number' + 96 +"\n");
             var listing = {
                 name: $scope.name,
                 rating: $scope.rating,
-                address: $scope.address
-            };
+                address: $scope.address,
+                crowdedness: $scope.crowdedness,
+                votes: 1,
+                rooms: $scope.data.rooms,
+                movies: $scope.data.movies
+              };
 
             //grabs the listing id (the same way as the findOne() method above)
             var id = $stateParams.listingId;
@@ -171,6 +176,7 @@ console.log('line number' + 96 +"\n");
             /* Update the article using the Listings factory */
             Listings.update(id, listing)
                 .then(function(response) {
+                  console.log(id);
                     //if the object is successfully saved redirect back to the list page
                     $state.go('listings.list', { successMessage: 'Listing succesfully updated!' });
                 }, function(error) {
@@ -338,37 +344,14 @@ console.log('line number' + 198 +"\n");
 
                 });
 
-
-
                 //makes the map available to the view
-                // module.exports = map;
+                //module.exports = map;
 
             }, function(error) {
                 $scope.loading = false;
                 $scope.error = 'Unable to retrieve listings!\n' + error;
             });
         }
-        // var possible_coordinate_set=[];
-        // $scope.showDetails = function(e) {
-        //     map.on('click', function(e) {
-        //         var features = e.lngLat;
-        //
-        //         var lat = Math.round(features.lat * 100000) / 100000;
-        //         var long = Math.round(features.lng * 100000) / 100000;
-        //
-        //         $scope.listings.forEach(function(listing) {
-        //             console.log(listing.coordinates);
-        //             if(listing.coordinates[0] < (long + .002) && listing.coordinates[0] > (long - .002)) {
-        //                 if(listing.coordinates[1] < (lat + .002) && listing.coordinates[1] > (lat - .002)) {
-        //                     document.getElementById("entryName1").innerText = listing.name;
-        //                     document.getElementById("entryCrowdedness1").innerText = listing.crowdedness;
-        //                     document.getElementById("entryRating1").innerText = listing.rating;
-        //                     document.getElementById("entryAddress1").innerText = listing.address;
-        //                 }
-        //             }
-        //         });
-        //     });
-        // }
 
         //initializes room and movie array
         $scope.data ={
@@ -425,6 +408,27 @@ console.log('line number' + 198 +"\n");
             if($event.which == 1)
                 $scope.data.movies.splice(index,1);
         };
+
+
+        //adds vote to average 
+        $scope.sendVote = function(listing, id, vote){
+
+          var crowdedness = parseFloat(listing.crowdedness)*parseFloat(listing.votes) + parseFloat(vote);
+          crowdedness = parseFloat(crowdedness)/(parseFloat(listing.votes)+1);
+
+          listing.crowdedness = crowdedness;
+          listing.votes = listing.votes + 1;
+
+          /* Update the article using the Listings factory */
+            Listings.update(listing._id, listing)
+                .then(function(response) {
+                    //if the object is successfully saved redirect back to the list page
+                    $state.go('listings.list', { successMessage: 'Listing succesfully updated!' });
+                }, function(error) {
+                    //otherwise display the error
+                    $scope.error = 'Unable to update listing!\n' + error;
+                });
+        }
 
         /* Bind the success message to the scope if it exists as part of the current state */
         if($stateParams.successMessage) {

@@ -20,7 +20,7 @@
             </div>
           </div>
           <div class="form-group" show-errors>
-            <label for="rating">Crowdedness %</label>
+            <label for="rating">Quality Rating</label>
             <input name="rating" type="text" ng-model="rating" id="rating" class="form-control" placeholder="Enter a number out of 100" required>
             <div ng-messages="listingForm.rating.$error" role="alert">
               <p class="help-block error-text" ng-message="required">This field is required</p>
@@ -31,7 +31,7 @@
             <input name="address" type="text" ng-model="address" id="address" class="form-control" placeholder="Address">
           </div>
           <div class="form-group">
-            <label for="crowdedness">User-Voted Rating</label>
+            <label for="crowdedness">User-Voted Crowdedness</label>
             <input name="crowdedness" type="text" ng-model="crowdedness" id="crowdedness" class="form-control" placeholder="Enter a number out of 5">
           </div>
           <div class="form-group">

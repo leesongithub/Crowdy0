@@ -1,39 +1,85 @@
-<!-- Fill in this file to create a UI view for editing listing entries. -->
-<div class="row" ng-controller="ListingsController" ng-init=findOne()>
-  <div class="col-md-offset-1 col-md-10 formWrapper">
+<div class="row" ng-controller="ListingsController">
+  <div class="col-md-offset-1 col-md-10 formWrapper" style="background-color: moccasin">
     <div class="page-header">
-      <h3>Edit a Listing</h3>
-      <!-- 
+      <h3>Edit Theater (Only for Theater Owners)</h3>
+   <!-- 
         Validation of forms is important to ensure that a user submits the correct information. Angular provides
         some useful APIs for validating forms. Documentation can be found here: 
-
           https://docs.angularjs.org/guide/forms
-
-        We use the ng-submit directive to update a new listing. The controller's update() function checks the validity of the form and sends any errors in the form of a call to $broadcast. Bootstrap also provides 
-        conveience methods for displaying these error messages to the user. If you're not quite sure what this code is doing, take a look at this link: 
-
+        We use the ng-submit directive to create a new listing. The controller's create() function checks the validity of the form and sends any errors in the form of a call to $broadcast. Bootstrap also provides 
+        conveience methods for displaying these error messages to the user. If you're not quite sure what this rating is doing, take a look at this link: 
           https://github.com/paulyoder/angular-bootstrap-show-errors
        -->
       <form name="listingForm" class="form-horizontal" ng-submit="update(listingForm.$valid)">
         <fieldset>
           <div class="form-group" show-errors>
-            <label for="name">Name</label>
-            <input name="name" type="text" ng-model="name" id="name" class="form-control" required>
+            <label for="name">Theater Name</label>
+            <input name="name" type="text" ng-model="name" id="name" class="form-control" placeholder="Name" required>
             <div ng-messages="listingForm.name.$error" role="alert">
-              <p class="help-block error-text" ng-message="required">Listing name is required</p>
+              <p class="help-block error-text" ng-message="required">This field is required</p>
             </div>
           </div>
           <div class="form-group" show-errors>
-            <label for="code">Rating</label>
-            <input name="rating" type="text" ng-model="rating" id="rating" class="form-control" placeholder="Rating" required>
-            <div ng-messages="listingForm.code.$error" role="alert">
-              <p class="help-block error-text" ng-message="required">Listing rating is required</p>
+            <label for="rating">Quality Rating</label>
+            <input name="rating" type="text" ng-model="rating" id="rating" class="form-control" placeholder="Enter a number out of 100" required>
+            <div ng-messages="listingForm.rating.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">This field is required</p>
             </div>
           </div>
           <div class="form-group">
             <label for="address">Address</label>
             <input name="address" type="text" ng-model="address" id="address" class="form-control" placeholder="Address">
           </div>
+          <div class="form-group">
+            <label for="crowdedness">User-Voted Crowdedness</label>
+            <input name="crowdedness" type="text" ng-model="crowdedness" id="crowdedness" class="form-control" placeholder="Enter a number out of 5">
+          </div>
+          <div class="form-group">
+            <label for="rooms">Add Rooms</label>
+            <table>
+             <tr ng-repeat="number in data.rooms track by $index">
+                <td> 
+                  <p> Room ID Number </p>
+                  <input type="text" ng-model="data.rooms[$index].number" class="form-control" placeholder="Room Number"> 
+                  <p> Room Capacity </p> 
+                  <input type="text" ng-model="data.rooms[$index].capacity" class="form-control" placeholder="Room Capacity">
+                  <input type="button" class="btn btn-info" ng-click="addRow($index)" value="Add Another Room" ng-show=$last>
+                   <input type="button" ng-click="deleteRow($event,number)" value="Delete Room" ng-show="$index != 0">
+                </td>
+             </tr> 
+           </table> 
+         </div>
+          <div class="form-group">
+            <label for="rooms">Add Movies</label>
+            <table>
+             <tr ng-repeat="title in data.movies track by $index">
+                <td> 
+                  <p>Movie Title</p>
+                  <input type="text" ng-model="data.movies[$index].title" class="form-control" placeholder="Movie Title"> 
+                  <p>Movie Description</p> 
+                  <textarea rows="5" cols="30" ng-model="data.movies[$index].description" class="form-control" placeholder="Movie Description"></textarea>
+                  <p>Showings</p> 
+                  <p>Form</p> 
+                  <select name="data.movies[$index].showings[0].form">
+                    <option value="standard">Standard</option>
+                    <option value="imax">IMAX</option>
+                    <option value="3D">3D</option>
+                    <option value="realD">RealD 3D</option>
+                  </select>
+                  <p>Room ID</p> 
+                  <!--<select ng-model="data.movies[$index].showings[0].room" ng-options="x.number for x in data.rooms">
+                  </select>-->
+                  <input type="number" ng-model="data.movies[$index].showings[0].room">
+                  <p>Time</p> 
+                  <input type="datetime-local" ng-model="data.movies[$index].showings[0].time">
+                  <p>Tickets Bought</p> 
+                  <input type="number" name="data.movies[$index].showings[0].tickets_bought" min="0" max="data.movies[$index].showings[0].capacity">
+                  <input type="button" class="btn btn-info" ng-click="addMovie($index)" value="Add Movie">
+                  <input type="button" ng-click="deleteMovie($event,title)" value="Delete Movie" ng-show="$index != 0">
+                </td>
+             </tr>
+           </table>
+         </div>
           <div class="form-group">
             <input type="submit" class="btn btn-default">
           </div>
