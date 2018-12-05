@@ -3,7 +3,7 @@
   Notice the ng-init attribute, which will load the listings from our server on initializing the view. 
   -->
 <div class="row" ng-controller="ListingsController" ng-init="find()">
-  <div class="col-md-offset-1 col-md-10">
+  <div class="col-md-12" style="background-color: moccasin; border-radius: 8px;">
     <!-- 
       If an error occurs while we try to save the listing using our server's API, it will show up here. 
       This is made possible by handling any errors by binding them to $scope.error. 
@@ -13,23 +13,31 @@
       From the Angular docs: 
       "It is preferable to use ngBind instead of {{ expression }} if a template is momentarily displayed by the browser in its raw state before Angular compiles it. Since ngBind is an element attribute, it makes the bindings invisible to the user while the page is loading." (https://docs.angularjs.org/api/ng/directive/ngBind)
      -->
+
+     <!-- Red error message when "could not retrieve listings" -->
     <div ng-show="error" class="text-danger">
       <strong ng-bind="error"></strong>
     </div>
+
+    <!-- Green success message when "successfully created listing" -->
     <div ng-show="success" class="text-success">
       <strong ng-bind="success"></strong>
     </div>
+
+    <!-- Search Bar at the top -->
     <div class="input-group" id="searchBar">
+      
       <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
       <input type="text" class="form-control" placeholder="Search by name, movie, or location!" ng-model="query">
+      
     </div>
     
-    <div class="col-md-6" class="tableWrapper">
+    <!-- The head row of the list with titles  -->
+    <div class="col-md-4" class="tableWrapper" style="background-color: lavender; border-radius: 8px;">
       <table class="table table-striped table-hover">
         <tr>
-          <th>Theater</th>
-          <th>Crowdedness %</th>
-          <th></th>
+          <th style="background-color: lavender; width: 240px"><h1 style="font-family: phosphate; text-align: center; color: #E51E1E">T H E A T E R S</h1></th>
+          <!--<th style="background-color: ;">Crowdedness%</th>-->
         </tr>
         <!-- 
           The ui-sref attribute is used by Angular UI Router to switch the state to an individual listing, 
@@ -37,11 +45,16 @@
           When a user clicks on a table row, the view will display a single listing and the state change will be
           reflected in the browser's URL. 
           -->
-        <tr ng-repeat="listing in listings | filter: query" ui-sref="listings.view({ listingId: listing._id })">
-          <td>{{listing.name}}</td>
-          <td>{{listing.rating}}</td>
+        <tr ng-repeat="listing in listings | filter: query" ui-sref="listings.view({ listingId: listing._id })" style="background-color: ">
+          <td style="border-radius: 8px; text-align: center">{{listing.name}}</td>
+          <!--<td>{{listing.rating}}</td>-->
         </tr>
       </table>
+    </div>
+
+    <!-- Right side of screen -->
+    <div class="col-md-8" style="background-color: ;">
+      <img src="/../../img/postersprice.png" style="width: 800px; height: auto; padding-top: 7px; padding-left: 10px">
     </div>
 
     <img id="loader" ng-show="loading" src="/../../img/484.gif">
