@@ -1,16 +1,113 @@
-angular.module('listings').controller('ListingsController', ['$scope', '$location', '$stateParams', '$state', 'Listings','firebase',
-    function($scope, $location, $stateParams, $state, Listings,firebase){
+angular.module('listings').controller('loginController',['$scope','$rootScope', function($scope,$rootScope){
+    $scope.login_start=function(){
+        if($rootScope.auth===undefined){
+            $rootScope.auth=firebase.auth();
+
+
+        }
+        $rootScope.currentUser=$rootScope.auth.currentUser;
+        // $rootScope.auth.onAuthStateChanged(function(user) {
+        //     if (user) {
+        //         $rootScope.currentUser=user;
+        //         // ...
+        //     } else {
+        //         $rootScope.currentUser=null;
+        //     }
+        //     // window.location.href = "../../login";
+        //
+        // });
+    };
+
+    // $scope.currentUser=$firebaseAuth().$getAuth();
+
+    // $scope.$watch('show_login',function(newValue,oldValue){
+    //     console.log('show_login Changed');
+    //     console.log(newValue);
+    //     console.log(oldValue);
+    // });
+    $scope.login_credentials={
+        'txtEmail':'',
+        'txtPassword':'',
+    };
+    $scope.signup_credentials={
+        'txtEmail':'',
+        'txtPassword':'',
+    };
+    $scope.login=function(){
+        // firebase.initializeApp(config);
+
+
+        const email = $scope.login_credentials.txtEmail;
+        const password = $scope.login_credentials.txtPassword;
+
+        const auth=$rootScope.auth;
+        if($rootScope.auth.currentUser){
+            $rootScope.currentUser=$rootScope.auth.currentUser;
+            return;
+        }
+        auth.signInWithEmailAndPassword(email, password).then((firebaseUser)=>{
+            // this runs if the promise is returned successfully
+            // $scope.update_current_user(auth.currentUser);
+
+            // $rootScope.currentUser=firebaseUser.user;
+            console.log("Login Successful, redirecting to Index");
+        }).catch((e) =>
+            console.log(e.message)
+            // alert(e.message)
+
+        );
+        // TODO: return username to replace the login button
+    };
+    $scope.update_current_user=function(user){
+        $rootScope.currentUser=user;
+
+    };
+
+    $scope.signup=function(){
+        // firebase.initializeApp(config);
+        // login_button.display="none";
+        // logout_button.display="inline";
+        // $scope.show_login=!$scope.show_login;
+        // console.log($scope.show_login);
+
+        const email = $scope.signup_credentials.txtEmail;
+        const password = $scope.signup_credentials.txtPassword;
+        const auth=$scope.auth;
+        if($rootScope.auth.currentUser){
+            $rootScope.currentUser=$rootScope.auth.currentUser;
+            return;
+        }
+       auth.createUserWithEmailAndPassword(email, password).then((firebaserUser)=>{
+           $rootScope.currentUser=auth.currentUser;
+           // $scope.update_current_user(auth.currentUser);
+        console.log("New User Creation Successful, redirecting to Index");
+           // $rootScope.currentUser=user;
+
+           // window.location.href = "../../index.html";
+       }).catch((e)=>
+           console.log(e.message)
+           // alert(e.message)
+       );
+    };
+
+    $scope.log_out=function(){
+        const auth=$rootScope.auth;
+        auth.signOut().then(function(){
+            // $rootScope.currentUser=null;
+            // $scope.update_current_user(null);
+            window.location.href = "../../login";
+
+        }).catch((e)=>
+            console.log(e.message)
+        );
+    };
+}]);
+
+angular.module('listings').controller('ListingsController', ['$scope', '$location', '$stateParams', '$state', 'Listings',
+    function($scope, $location, $stateParams, $state, Listings){
         var map, geojson;
 
 
-        var txtEmail=angular.element( document.getElementById("login_email_input"));
-        var txtPassword=angular.element( document.getElementById("login_password_input"));
-
-        var newEmail=angular.element( document.getElementById("sign_up_email_input"));
-        var newPassword=angular.element( document.getElementById("sign_up_password_input"));
-
-        var login_button=angular.element( document.getElementById("login_button"));
-        var logout_button=angular.element( document.getElementById("logout_button"));
 
         // var login_btn=document.getElementById("login_btn");
         // var new_usr_btn=document.getElementById("new_usr_btn");
@@ -212,38 +309,7 @@ console.log('line number' + 96 +"\n");
                 $scope.error = 'Unable to delete listing!\n' + error;
             });
         };
-        $scope.login=function(){
-            // firebase.initializeApp(config);
 
-            const email = txtEmail.value;
-            const password = txtPassword.value;
-            login_button.display="none";
-            logout_button.display="inline";
-
-            // const auth=firebase.auth();
-            // auth.signInWithEmailAndPassword(email, password).then(function(){
-            //     // this runs if the promise is returned successfully
-            //
-            //
-            //     console.log("Login Successful, redirecting to Index");
-            //     window.location.href = "../../index.html";
-            // }).catch(e =>console.log(e.message) );
-            // TODO: return username to replace the login button
-        };
-        $scope.signup=function(){
-            // firebase.initializeApp(config);
-            login_button.display="none";
-            logout_button.display="inline";
-            // const email = newEmail.value;
-            //   const password = newPassword.value;
-            //   const auth=firebase.auth();
-            //    auth.createUserWithEmailAndPassword(email, password).then(function(){
-            //
-            //     console.log("New User Creation Successful, redirecting to Index");
-            //     window.location.href = "../../index.html";
-            //
-            //    }).catch(e =>console.log(e.message) );
-        };
         //Creates a MapBox map with markers for each listing
         $scope.createMap = function() {
 console.log('line number' + 198 +"\n");

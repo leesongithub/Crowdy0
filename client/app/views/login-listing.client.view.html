@@ -1,5 +1,5 @@
-<html>
-<div ng-controller="ListingsController" >
+
+<div ng-controller="loginController" ng-init="login_start()" >
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -65,23 +65,31 @@
             }
         }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase-auth.js"></script>
+    <!--<script src="https://www.gstatic.com/firebasejs/5.5.7/firebase-app.js"></script>-->
+    <!--<script src="https://www.gstatic.com/firebasejs/5.5.7/firebase-auth.js"></script>-->
 
-    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
-
+    <!--<script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>-->
+    <script>
+    currentUser=undefined;
+    </script>
 </head>
 
 <body>
-<form >
+<h2 style="color: tomato;  margin:0 auto;
+    width:100px;
+    height:100px; font-family: phosphate;" ng-show="currentUser">WELCOME TO CROWDY</h2>
+<button id="logout_btn" style="width: 100%"  ng-show="currentUser;  " ng-click="log_out()">Log Out</button>
+<form ng-hide="currentUser">
+
+
     <div class="row">
-        <h1 style="color: tomato; font-family: times; text-align: ;">
+        <h1 style="color: tomato; font-family: times; ">
          . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
         </h1>
     </div>
 
-    <div class="row">
+    <div class="row" >
         <div class="col-md-4" style="">
             <h2 style="color: tomato; font-family: phosphate;">Returning User? Login!</h2>
             <div class="imgcontainer">
@@ -91,21 +99,23 @@
             <div class="container" >
                 <label> <b>Email</b></label>
                 <div class="row">
-                    <input id="login_email_input" type="text" placeholder="Enter email">
+                    <input id="login_email_input" ng-model="login_credentials.txtEmail" type="text" placeholder="Enter email">
                 </div>
 
                 <label> <b>Password</b></label>
                 <div class="row">
-                    <input id="login_password_input" type="password" placeholder="Please enter password">
+                    <input id="login_password_input" ng-model="login_credentials.txtPassword" type="password" placeholder="Please enter password">
                 </div>
 
                 <div class="row">
-                    <button id="login_btn" type="submit" ng-click="login()">Login</button>
+                    <button id="login_btn"  ng-click="login()">Login</button>
+                    <!--<button id="login_btn" type="submit" href ng-click="show_login=!show_login">Login</button>-->
+
                 </div>
 
-                <label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember me
-                </label>
+                <!--<label>-->
+                    <!--<input type="checkbox" checked="checked" name="remember"> Remember me-->
+                <!--</label>-->
             </div>
         </div>
 
@@ -114,34 +124,34 @@
 
         <div class="col-md-4" style="background-color: peachpuff; border-radius: 8px">
             <h2 style="color: tomato; font-family: phosphate; text-align: center;">New User? Sign up!</h2>
-            <div class="imgcontainer" style="background-color: ;">
+            <div class="imgcontainer">
                 <img src="/../../img/Login2.PNG" alt="Avatar" class="avatar" style="margin-left: 27px">
             </div>
 
             <div class="container" style="margin-left: 11px; margin-bottom: 11px">
                 <label> <b>Email</b></label>
                 <div class="row">
-                    <input id="sign_up_email_input" type="text" placeholder="Please enter email">
+                    <input id="sign_up_email_input" type="text" ng-model="signup_credentials.txtEmail" placeholder="Please enter email">
                 </div>
 
                 <label> <b>Password</b></label>
                 <div class="row">
-                    <input id="sign_up_password_input" type="password" placeholder="Create a secure password">
+                    <input id="sign_up_password_input" type="password" ng-model="signup_credentials.txtPassword" placeholder="Create a secure password">
                 </div>
 
                 <div class="row">
-                    <button id="new_usr_btn" type="submit" ng-click="signup()">Sign Up</button>
+                    <button id="new_usr_btn" ng-click="signup()">Sign Up</button>
                 </div>
 
-                <label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember me
-                </label>
+                <!--<label>-->
+                    <!--<input type="checkbox" checked="checked" name="remember"> Remember me-->
+                <!--</label>-->
             </div>
         </div>
     </div>
 
     <div class="row">
-        <h1 style="color: tomato; font-family: times; text-align: ;">
+        <h1 style="color: tomato; font-family: times; ">
          . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
         </h1>
@@ -149,7 +159,10 @@
 
 </form>
 
+
 <script>
+
+
 
     // var config = {
     //         apiKey: "AIzaSyD3Z7koK5KJLv1V5HjB_keGFn6UaLOZ_TE",
@@ -203,4 +216,5 @@
 
 </script>
 </body>
-</html>
+</div>
+

@@ -14,13 +14,16 @@
         <div class="col-md-6">
           <!-- Add a ui-sref property to the anchor tags to allow navigation between different states -->
           <nav>
-            <ul class="nav nav-pills" ng-controller="ListingsController as ctrl">
+            <ul class="nav nav-pills" >
               <li><a ui-sref="listings.map" style="font-family: phosphate; color: tomato; font-size: 20px">MAP</a></li>
               <li><a ui-sref="listings.list" style="font-family: phosphate; color: tomato; font-size: 20px">LIST</a></li>
-              <li><a ui-sref="listings.create" style="font-family: phosphate; color: tomato; font-size: 20px">ADD THEATER</a></li>
+              <li><a ui-sref="listings.create" ng-show="currentUser" style="font-family: phosphate; color: tomato; font-size: 20px">ADD THEATER</a></li>
               <!--<li><a ui-sref="listings.theater" style="font-family: phosphate; color: tomato; font-size: 20px">THEATER VIEW</a></li>-->
-              <li> <input id="login_button" style="display: inline" type="image" ui-sref="listings.login" class="resize2" src="img/Login.PNG"/> </li>
-              <input id="logout_button" style="display: none" type="image"  class="resize2" src="img/log_out.png"/>
+              <!--<li> <input id="login_button" ng-show="show_login" href ng-click="show_login=!show_login" type="image" ui-sref="listings.login" class="resize2" src="img/Login.PNG"/> </li>-->
+              <!--<p> {{show_login}}</p>-->
+
+              <li> <input id="login_button"  ui-sref="login" type="image"  class="resize2" src="img/Login.PNG"/> </li>
+              <!--<input id="logout_button" ng-hide="show_login"  type="image"  class="resize2" src="img/log_out.png"/>-->
               <!--<li> <input id="logout_button" style="display: inline" type="image" ui-sref="listings.login" class="glyphicon glyphicon-log-out" src="/img/Login.PNG"/> </li>-->
 
             </ul>
@@ -29,6 +32,7 @@
       </div>
       <div ui-view></div>
     </div>
+
     <!-- Dependencies, all of these are valid and have been checked! -->
     <script src="../public/lib/jquery/dist/jquery.min.js"></script>
     <script src="../public/lib/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -39,9 +43,19 @@
     <script src="../public/lib/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="../public/lib/angular-google-maps/dist/angular-google-maps.min.js"></script>
-
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <script>
+        var config = {
+            apiKey: "AIzaSyD3Z7koK5KJLv1V5HjB_keGFn6UaLOZ_TE",
+            authDomain: "redtelephone-d8560.firebaseapp.com",
+            databaseURL: "https://redtelephone-d8560.firebaseio.com",
+            projectId: "redtelephone-d8560",
+            storageBucket: "redtelephone-d8560.appspot.com",
+            messagingSenderId: "863132904116"
+        };
+        firebase.initializeApp(config);
+    </script>
 
     <!-- Application Source Code -->
     <script src="./app/app.js"></script>

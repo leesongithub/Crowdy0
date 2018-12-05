@@ -10,6 +10,7 @@ angular.module('listings').factory('Listings', ['$http',
       }, 
 
       read: function(id) {
+
         return $http.get('http://localhost:8080/api/listings/' + id);
       }, 
 

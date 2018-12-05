@@ -42,13 +42,24 @@ angular.module('listings').config(['$stateProvider', '$urlRouterProvider',
         url: '/listings/:theaterName',
         templateUrl: 'app/views/theater-listings.client.view.html'
       })
-      .state('listings.login', {
-            url: '/listings/login',
-            templateUrl: 'app/views/login-listing.client.view.html'
-      })
+
 
       /*
         Create a state for editing an individual listing, and another for the map view. 
        */
   } 
+]);
+angular.module('listings').config(['$stateProvider', '$urlRouterProvider',
+    function($stateProvider) {
+        //Listings state providing
+        $stateProvider
+            .state('login', {
+                url: '/login',
+                templateUrl: 'app/views/login-listing.client.view.html'
+            })
+
+        /*
+          Create a state for editing an individual listing, and another for the map view.
+         */
+    }
 ]);
