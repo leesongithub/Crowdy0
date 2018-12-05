@@ -17,9 +17,9 @@ The core features of this website are the map API (from MapBox) with colored ind
 ## Roles and Contributions
 Leeson Chen: user interface design, markers, map information, view pages for login, list, map, and info, splash page & graphics
 Bridget Homer: Mapbox implementation, MongoDB database, voting feature, markers
-Alexander Barnard: Firebase login
+Alexander Barnard: Firebase login, deployment
 Jack Schulte: Database schema, map pop-ups
-Xing Huang: Firebase login, bug fixes with information display
+Xing Huang: Firebase login, user authentication, bug fixes with information display
 
 
 ### This website was written as a project for CEN 3031 at the University of Florida, to teach CSE students about the agile Scrum framework and process of software development. 
