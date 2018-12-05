@@ -48,6 +48,10 @@ exports.update = function(req, res) {
   listing.name = req.body.name;
   listing.rating = req.body.rating;
   listing.address = req.body.address;
+  listing.crowdedness = req.body.crowdedness;
+  listing.movies = req.body.movies;
+  listing.votes = req.body.votes;
+  listing.rooms = req.body.rooms;
 
   /* save the coordinates (located in req.results if there is an address property) */
   if(req.results) {

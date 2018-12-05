@@ -10,8 +10,8 @@
         <h1 style="font-family: phosphate">{{listing.name}}</h1>
 
           <h3>Address: {{listing.address}}</h3>
-          <h3>Crowdedness: {{listing.rating}}%</h3>
-          <h3>Rating: {{listing.crowdedness}} stars out of 5</h3>
+          <h3>Crowdedness: {{listing.crowdedness}}%</h3>
+          <h3>Rating: {{listing.rating}} stars out of 5</h3>
         
         <!-- Second section: Rooms (number and capacity) --> 
         <h4 style="margin-top: 25px" ng-repeat="room in listing.rooms">Room #{{room.number}}  –  Capacity of {{room.capacity}} people</h4>
@@ -40,6 +40,13 @@
           </tr>
         </table>
         
+        <input type="radio" ng-model="vote" value="20">1
+        <input type="radio" ng-model="vote" value="40">2
+        <input type="radio" ng-model="vote" value="60">3
+        <input type="radio" ng-model="vote" value="80">4
+        <input type="radio" ng-model="vote" value="100">5
+        <button ng-click="sendVote(listing, listing._id, vote)">Submit Vote</button>
+
         <a class="btn btn-primary" ui-sref="listings.edit({ listingId: listing._id })">
           <i class="glyphicon glyphicon-edit"></i>
           Edit

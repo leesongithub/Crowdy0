@@ -15,6 +15,7 @@ var listingSchema = new Schema({
   }, 
   address: String,
   crowdedness: Number,
+  votes: Number,
   rating: Number, 
   coordinates: [Number, Number],
    movies: [{
