@@ -1,5 +1,15 @@
 /* register the modules the application depends upon here*/
-angular.module('listings', []);
+
+var config = {
+    apiKey: "AIzaSyD3Z7koK5KJLv1V5HjB_keGFn6UaLOZ_TE",
+    authDomain: "redtelephone-d8560.firebaseapp.com",
+    databaseURL: "https://redtelephone-d8560.firebaseio.com",
+    projectId: "redtelephone-d8560",
+    storageBucket: "redtelephone-d8560.appspot.com",
+    messagingSenderId: "863132904116"
+};
+firebase.initializeApp(config);
+angular.module('listings', ['firebase']);
 
 /* register the application and inject all the necessary dependencies */
 var app = angular.module('directoryApp', ['ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'listings']);
