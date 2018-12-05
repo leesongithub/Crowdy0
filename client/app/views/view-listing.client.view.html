@@ -40,12 +40,16 @@
           </tr>
         </table>
         
-        <input type="radio" ng-model="vote" value="20">1
-        <input type="radio" ng-model="vote" value="40">2
-        <input type="radio" ng-model="vote" value="60">3
-        <input type="radio" ng-model="vote" value="80">4
-        <input type="radio" ng-model="vote" value="100">5
-        <button ng-click="sendVote(listing, listing._id, vote)">Submit Vote</button>
+        <h3 style="font-family: times">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</h3>
+        <div style="align-content: center">
+          <h2 style="">Rate this Theater</h2>
+          <input type="radio" ng-model="vote" value="1">1
+          <input type="radio" ng-model="vote" value="2">2
+          <input type="radio" ng-model="vote" value="3">3
+          <input type="radio" ng-model="vote" value="4">4
+          <input type="radio" ng-model="vote" value="5">5<br>
+          <button ng-click="sendVote(listing, listing._id, vote)" style="background-color: #F7C211; border: 2px solid black; padding: 4px 2px; border-radius: 8px; width: 130px; font-family: phosphate;">Submit Vote</button>
+        </div>
 
         <a class="btn btn-primary" ui-sref="listings.edit({ listingId: listing._id })">
           <i class="glyphicon glyphicon-edit"></i>
